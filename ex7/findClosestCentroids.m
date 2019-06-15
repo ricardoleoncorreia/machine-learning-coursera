@@ -21,11 +21,16 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = size(X, 1);
+norms = zeros(K, m);
 
+for i=1:K
+    norms(i,:) = vecnorm((repmat(centroids(i,:), m, 1) - X)');
+end
 
+[M, I] = min(norms);
 
-
-
+idx = I';
 
 % =============================================================
 
