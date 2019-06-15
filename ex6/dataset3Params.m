@@ -23,7 +23,34 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+% Set required ranges
+C_test = [0.01 0.03 0.1 0.3 1 3 10 30];
+sigma_test = [0.01 0.03 0.1 0.3 1 3 10 30];
 
+% Calculate first error
+model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
+predictions = svmPredict(model, Xval);
+error = mean(double(predictions ~= yval));
+
+% Start iteration process
+for i=1:size(C_test, 2)
+    for j=1:size(sigma_test, 2)
+        
+        % Get model
+        model = svmTrain(X, y, C_test(i), @(x1, x2) gaussianKernel(x1, x2, sigma_test(j))); 
+        
+        % Get predictions
+        predictions = svmPredict(model, Xval);
+        
+        % Compare results
+        new_error = mean(double(predictions ~= yval));
+        if new_error < error
+            error = new_error;
+            C = C_test(i);
+            sigma = sigma_test(j);
+        end
+    end
+end
 
 
 
