@@ -62,23 +62,46 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+for i = 1:m
 
+    % Create x, y for iteration
+    y_temp = zeros(num_labels,1);
+    y_temp(y(i)) = 1;
+    a1 = [1 X(i,:)]';
+    
+    % Calculate second layer activation values
+    z2 = Theta1 * a1;
+    a2_temp = sigmoid(z2);
+    a2 = [1; a2_temp];
+    
+    %Calculate hypothesis result
+    z3 = Theta2 * a2;
+    h = sigmoid(z3);
+    
+    %Calculate cost function
+    J = J + (-y_temp' * log(h) - (1 - y_temp') * log(1 - h)) / m;
+    
+    %Calculate gradient
+    delta3 = h - y_temp;
+    delta2 = Theta2' * delta3 .* sigmoidGradient([1; z2]);
+    
+    Theta1_grad = Theta1_grad + delta2(2:end) * a1';
+    Theta2_grad = Theta2_grad + delta3 * a2';
 
+end
 
+Theta1_temp = Theta1 .^ 2;
+Theta2_temp = Theta2 .^ 2;
 
+J = J + (lambda / (2*m)) * (sum(sum(Theta1_temp(:,2:end))) + sum(sum(Theta2_temp(:,2:end))));
 
+grad1_reg_term = (lambda/m) * Theta1;
+grad1_reg_term(:,1) = 0 .* grad1_reg_term(:,1);
+grad2_reg_term = (lambda/m) * Theta2;
+grad2_reg_term(:,1) = 0 .* grad2_reg_term(:,1);
 
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = (Theta1_grad / m) + grad1_reg_term;
+Theta2_grad = (Theta2_grad / m) + grad2_reg_term;
 
 % -------------------------------------------------------------
 
