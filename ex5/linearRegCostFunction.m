@@ -28,8 +28,6 @@ J = (sum((X * theta - y) .^ 2) + lambda * sum(reduced_theta .^ 2)) / (2 * m);
 
 grad = (X' * (X * theta - y) + (lambda * reduced_theta))/ m;
 
-
-
 % =========================================================================
 
 grad = grad(:);
