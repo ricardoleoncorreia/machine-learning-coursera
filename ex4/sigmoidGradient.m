@@ -16,15 +16,6 @@ sigmoid_value = sigmoid(z);
 
 g = sigmoid_value .* (1 - sigmoid_value);
 
-
-
-
-
-
-
-
-
-
 % =============================================================
 
 
