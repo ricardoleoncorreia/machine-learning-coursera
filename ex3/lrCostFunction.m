@@ -47,13 +47,6 @@ J = (-y' * log(h) - (1 - y)' * log(1 - h) + (lambda / 2) * sum(reduced_theta .^ 
 
 grad = (X' * (h - y) + lambda * reduced_theta)/ m;
 
-
-
-
-
-
-
-
 % =============================================================
 
 grad = grad(:);
