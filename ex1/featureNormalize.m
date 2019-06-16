@@ -26,13 +26,15 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 
+[m, n] = size(X);
 
+mu = mean(X);
+sigma = std(X);
 
+mu_ext = repmat(mu, m, 1);
+sigma_ext = repmat(sigma, m, 1);
 
-
-
-
-
+X_norm = (X - mu_ext) ./ sigma_ext;
 
 % ============================================================
 
